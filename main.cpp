@@ -2,7 +2,7 @@
 #include <random>
 #include <stdlib.h>
 #include <time.h>
-
+#include < stdlib.h >
 
 using namespace std;
 
@@ -20,6 +20,8 @@ int main() {
 	{
 		cout << "Play game (y): ";
 		cin >> input;
+
+		system("CLS");
 
 		srand(time(0));
 		Goal goal = getAtomGoal();
@@ -55,6 +57,21 @@ Goal getAtomGoal() {
 	goal.block = block;
 	goal.row = row;
 	goal.col = col;
+
+	cout << endl;
+
+	for (int i = 0; i < BOARDSIZE; i++)
+	{
+		for (int j = 0; j < BOARDSIZE; j++)
+			if (i == BOARDSIZE - 1 - row && j == col)
+				cout << " " << block << " ";
+			else
+				cout << " * ";;
+
+		cout << endl;
+	}
+
+
 	return goal;
 	
 }

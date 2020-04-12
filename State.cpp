@@ -84,7 +84,7 @@ int State::removeBlockFrom(int column) {
 // Places the block with value to the top of the column and returns if valid
 bool State::insertBlockTo(int column, int value) {
 	// Start from bottom and move up til empty space
-	for (int i = 0; i < BOARDSIZE - 1 ; i++)
+	for (int i = 0; i < BOARDSIZE; i++)
 	{
 		int blockValue = grid[i][column];
 		if (blockValue == 0) {
