@@ -21,6 +21,7 @@ public:
 	//priority_queue<Action> legalActions;
 
 	State();
+	State(const State& state);
 	bool operator==(State s);
 	void printBoard();
 	void pushDown();
@@ -30,7 +31,7 @@ public:
 	bool isBlockAt(int block, int row, int col);
 	void getBlockPosition(int block, int& row, int& col);
 	bool isBlockOnTop(int block);
-	int getTopOfColumn(int col);
+	int getTopIndexOfColumn(int col);
 	bool isColumnEmpty(int col);
 	bool isColumnFull(int col);
 

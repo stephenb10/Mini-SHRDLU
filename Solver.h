@@ -7,13 +7,14 @@ public:
 	State *initialState;
 	State *currentState;
 	Goal goal;
+	vector<State> moves;
 
 	Solver(State *is, Goal g) {
 		initialState = is;
 		goal = g;
 	}
 	void solve();
-	priority_queue<Action> getLegalActions(State* state, int level);
+	priority_queue<Action> getLegalActions(State* s, int level);
 	bool isGoalState(State state);
-	double calculateHeuristic(State* state);
+	double calculateHeuristic(State &state);
 };

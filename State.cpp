@@ -20,6 +20,12 @@ State::State() {
 	pushDown();
 }
 
+State::State(const State& state) {
+	for (int i = 0; i < BOARDSIZE; i++)
+		for (int j = 0; j < BOARDSIZE; j++)
+			grid[i][j] = state.grid[i][j];
+}
+
 bool State::operator==(State s) {
 	for (int i = 0; i < BOARDSIZE; i++)
 		for (int j = 0; j < BOARDSIZE; j++)
@@ -78,7 +84,7 @@ int State::removeBlockFrom(int column) {
 // Places the block with value to the top of the column and returns if valid
 bool State::insertBlockTo(int column, int value) {
 	// Start from bottom and move up til empty space
-	for (int i = BOARDSIZE-1; i >= 0; i--)
+	for (int i = 0; i < BOARDSIZE - 1 ; i++)
 	{
 		int blockValue = grid[i][column];
 		if (blockValue == 0) {
@@ -124,20 +130,26 @@ void State::getBlockPosition(int block, int& row, int& col)
 // Check if block is on top of a column
 bool State::isBlockOnTop(int block)
 {
+	int row, col;
+	getBlockPosition(block, row, col);
 	
+	if (isColumnFull(col))
+		return grid[BOARDSIZE - 1][col] == block;
+
+	// Gets the top available spot for the column - 1 to see if it is the same as the blocks row position
+	return (getTopIndexOfColumn(col)-1) == row;
 }
 
-// Return index for the top of the column, if column empty return 0, if column full return 2;
-int State::getTopOfColumn(int col)
+// Return index for the top empty spot of column, if full return -1;
+int State::getTopIndexOfColumn(int col)
 {
 	if (isColumnFull(col))
-		return BOARDSIZE - 1;
-	if (isColumnEmpty(col))
-		return 0;
+		return -1;
 
-	for (int i = BOARDSIZE - 1; i >= 0; i--)
+	// Move from bottom to top 
+	for (int i = 0; i < BOARDSIZE; i++)
 	{
-		if (grid[i][col] != 0)
+		if (grid[i][col] == 0)
 			return i;
 	}
 }
@@ -145,6 +157,7 @@ int State::getTopOfColumn(int col)
 bool State::isColumnEmpty(int col) {
 	return grid[0][col] == 0;
 }
+
 bool State::isColumnFull(int col) {
 	return grid[BOARDSIZE-1][col] != 0;
 }
